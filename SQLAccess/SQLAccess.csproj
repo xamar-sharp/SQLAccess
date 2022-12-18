@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+	  <ApplicationIcon>mssql.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="connect.png" />
+    <None Remove="log.png" />
+    <None Remove="mssql.ico" />
+    <None Remove="mssql.png" />
+    <None Remove="pass.png" />
+    <None Remove="post.png" />
+    <None Remove="query.png" />
+    <None Remove="read.png" />
+    <None Remove="save.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="connect.png" />
+    <Content Include="log.png" />
+    <Content Include="mssql.ico" />
+    <Content Include="mssql.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="pass.png" />
+    <Content Include="post.png" />
+    <Content Include="query.png" />
+    <Content Include="read.png" />
+    <Content Include="save.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="ReactiveUI.WPF" Version="16.4.15" />
+    <PackageReference Include="System.Speech" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>
