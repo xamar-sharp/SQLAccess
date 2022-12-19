@@ -1,0 +1,37 @@
+﻿<Window x:Class="SQLAccess.ConnectionDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SQLAccess"
+        mc:Ignorable="d"
+        Title="ConnectionDialog" Height="450" Width="800">
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="Аутентификация MSSQL:"/>
+        <Label Target="{Binding ElementName=server}">
+            <StackPanel>
+                <AccessText Text="_СЕРВЕР"/>
+            </StackPanel>
+        </Label>
+        <TextBox Name="server" Text="{Binding Server,Mode=OneWayToSource}"></TextBox>
+        <Label Target="{Binding ElementName=database}">
+            <StackPanel>
+                <AccessText Text="_БАЗА ДАННЫХ"/>
+            </StackPanel>
+        </Label>
+        <TextBox Name="database" Text="{Binding Database,Mode=OneWayToSource}"></TextBox>
+        <Label Target="{Binding ElementName=login}">
+            <StackPanel>
+                <AccessText Text="_ЛОГИН"/>
+            </StackPanel>
+        </Label>
+        <TextBox Name="login" Text="{Binding Login,Mode=OneWayToSource}"></TextBox>
+        <Label Target="{Binding ElementName=password}">
+            <StackPanel>
+                <AccessText Text="_ПАРОЛЬ"/>
+            </StackPanel>
+        </Label>
+        <TextBox Name="password" Text="{Binding Password,Mode=OneWayToSource}"></TextBox>
+        <Button Command="{Binding ConnectCommand}" Content="ПОДКЛЮЧИТСЯ"/>
+    </StackPanel>
+</Window>

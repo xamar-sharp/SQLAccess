@@ -1,9 +1,11 @@
 ﻿<Application x:Class="SQLAccess.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SQLAccess"
+             xmlns:converters="clr-namespace:SQLAccess.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <converters:FormatConverter x:Key="formatConv"/>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

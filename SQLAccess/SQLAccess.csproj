@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="connect.png" />
+    <None Remove="fail.png" />
     <None Remove="log.png" />
     <None Remove="mssql.ico" />
     <None Remove="mssql.png" />
@@ -18,20 +19,23 @@
     <None Remove="query.png" />
     <None Remove="read.png" />
     <None Remove="save.png" />
+    <None Remove="success.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="connect.png" />
-    <Content Include="log.png" />
+    <Resource Include="connect.png" />
+    <Resource Include="fail.png" />
+    <Resource Include="log.png" />
     <Content Include="mssql.ico" />
-    <Content Include="mssql.png">
+    <Resource Include="mssql.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="pass.png" />
-    <Content Include="post.png" />
-    <Content Include="query.png" />
-    <Content Include="read.png" />
-    <Content Include="save.png" />
+    </Resource>
+    <Resource Include="pass.png" />
+    <Resource Include="post.png" />
+    <Resource Include="query.png" />
+    <Resource Include="read.png" />
+    <Resource Include="save.png" />
+    <Resource Include="success.png" />
   </ItemGroup>
 
   <ItemGroup>

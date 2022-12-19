@@ -20,7 +20,7 @@ namespace SQLAccess
         {
             var msg = $"Произошла ошибка!Детали ошибки: {details}";
             logger.SpeakAsync(msg, false, false);
-            MessageBox.Show("Error", msg, MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+            MessageBox.Show(msg,"Error!", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         }
     }
 }

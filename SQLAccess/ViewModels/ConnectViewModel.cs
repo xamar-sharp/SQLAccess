@@ -40,10 +40,10 @@ namespace SQLAccess.ViewModels
             get => _password;
             set => this.RaiseAndSetIfChanged(ref _password, value);
         }
-        internal static bool IsAuthenticated = false;
+        public static bool IsAuthenticated = false;
         public string ConnectionString { get => $"Server={_server};Database={_database};User ID={_login};Password={_password};TrustServerCertificate=TRUE"; }
         public ICommand ConnectCommand { get; set; }
-        public ConnectViewModel(ISpeechLogger logger)
+        public ConnectViewModel(ISpeechLogger logger,Window dialog)
         {
             _logger = logger;   
             ConnectCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -58,15 +58,18 @@ namespace SQLAccess.ViewModels
                 {
                     await App.Connection.OpenAsync();
                     IsAuthenticated = true;
-                    _logger.SpeakAsync("Успешное соединение!", false, true);
+                    dialog.DialogResult = true;
+                    dialog.Hide();
+                    _logger.SpeakAsync("Успешное соединение!", false, false);
                 }
                 catch(Exception ex)
                 {
                     App.HandleError("Проблема соединения", _logger);
+                    dialog.DialogResult = false;
                 }
-            }, this.WhenAny(c => c.Server, c => c.Database, c => Login, c => c.Password, (server, db, login, password) =>
+            }, this.WhenAny<ConnectViewModel,bool,string,string,string,string>(c => c.Server, c => c.Database, c => c.Login, c => c.Password, (server, db, login, password) =>
             {
-                return !(string.IsNullOrWhiteSpace(server.Value) || string.IsNullOrWhiteSpace(db.Value) || string.IsNullOrWhiteSpace(login.Value) || string.IsNullOrWhiteSpace(password.Value));
+                return !(string.IsNullOrEmpty(server.GetValue()) || string.IsNullOrEmpty(db.GetValue()) || string.IsNullOrEmpty(login.GetValue()) || string.IsNullOrEmpty(password.GetValue()));
             }));
         }
     }

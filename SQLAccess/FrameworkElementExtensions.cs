@@ -11,11 +11,11 @@ namespace SQLAccess
 {
     public static class FrameworkElementExtensions
     {
-        public static void AddToolTip(FrameworkElement element, string hint)
+        public static void AddToolTip(this FrameworkElement element, string hint)
         {
             element.ToolTip = new ToolTip() { Content = hint };
         }
-        public static void AddContextAction(FrameworkElement element, string textCommand, string iconName, ICommand command, object commandParameter)
+        public static void AddContextAction(this FrameworkElement element, string textCommand, string iconName, ICommand command, Func<Task<object>> commandParameter)
         {
             element.ContextMenu = new ContextMenu() { Items = { new MenuItem() { Header = textCommand, Icon = new BitmapImage(new Uri(iconName, UriKind.Relative)), Command = command,CommandParameter = commandParameter } } };
         }

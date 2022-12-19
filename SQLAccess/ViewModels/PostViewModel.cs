@@ -13,6 +13,8 @@ namespace SQLAccess.ViewModels
     public sealed class PostViewModel : ReactiveObject
     {
         private string _query;
+        private DateTime _date = DateTime.MinValue;
+        private int _added = 0;
         private readonly ISpeechLogger _logger;
         public string Query
         {
@@ -22,8 +24,21 @@ namespace SQLAccess.ViewModels
                 this.RaiseAndSetIfChanged(ref _query, value);
             }
         }
-        public DateTime LastExecuteDate { get; set; } = DateTime.MinValue;
-        public int AddedItems { get; set; } = 0;
+        public DateTime LastExecuteDate
+        {
+            get => _date;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _date, value);
+            }
+        }
+        public int AddedItems
+        {
+            get => _added; set
+            {
+                this.RaiseAndSetIfChanged(ref _added, value);
+            }
+        }
         public ICommand ExecuteCommand { get; set; }
         public PostViewModel(ISpeechLogger logger)
         {
@@ -41,7 +56,7 @@ namespace SQLAccess.ViewModels
                 {
                     App.HandleError("Вставка данных!", _logger);
                 }
-            }, this.WhenAny(e => e.Query, (q) => !string.IsNullOrEmpty(q.Value) && ConnectViewModel.IsAuthenticated));
+            }, this.WhenAny(e => e.Query, (q) => !string.IsNullOrEmpty(q.Value)));
         }
     }
 }

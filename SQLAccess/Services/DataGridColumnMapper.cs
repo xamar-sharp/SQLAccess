@@ -23,9 +23,9 @@ namespace SQLAccess.Services
             }
             else if (DateTime.TryParse(value.ToString(), out DateTime date))
             {
-                var markup = @"<DataTemplate xmlns=""http://schemas.microsoft.com/winfx/2006/presentation/xaml""><DatePicker DisplayDate=""" + "{" + $"Binding Path = {propertyBinding}, Mode=OneWay" +
-                    "}" + @""" SelectedDate=""" + "{" + $"Binding Path = {propertyBinding}, Mode=OneWayToSource" +
-                    "}" + @"""></DatePicker></DateTemplate>";
+                var markup = "<DataTemplate xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\" DataType=\"{x:Type DatePicker}\"><DatePicker DisplayDate=\"" + "{" + $"Binding Path = {propertyBinding}, Mode=OneWay" +
+                    "}" + "\" SelectedDate=\"" + "{" + $"Binding Path = {propertyBinding}, Mode=TwoWay" +
+                    "}" + "\"></DatePicker></DataTemplate>";
                 return new DataGridTemplateColumn() { CellTemplate = XamlReader.Load(XmlReader.Create(new StringReader(markup))) as DataTemplate, Header = propertyBinding };
             }
             else

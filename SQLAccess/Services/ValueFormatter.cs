@@ -21,12 +21,13 @@ namespace SQLAccess.Services
                 return $"'{((DateTime)value)}'";
             }
             else if (type==typeof(string)){
-                return $"'{value}'";
+                if(int.TryParse(value.ToString(),out int res))
+                {
+                    return $"{res}";
+                }
+                return $"'{value as string}'";// even Guid!!
             }
-            else
-            {
-                return value.ToString();
-            }
+            throw new NotImplementedException("Value formatter!");
         }
     }
 }
