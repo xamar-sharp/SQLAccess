@@ -22,5 +22,10 @@ namespace SQLAccess
             logger.SpeakAsync(msg, false, false);
             MessageBox.Show(msg,"Error!", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
         }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            HandleError($"Фатальное исключение!Тип ошибки: {e.Exception.GetType().Name}", new SpeechLogger());
+        }
     }
 }

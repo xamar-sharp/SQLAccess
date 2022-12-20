@@ -5,72 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQLAccess"
         mc:Ignorable="d" xmlns:models="clr-namespace:SQLAccess.ViewModels;assembly=SQLAccess"
-        Title="MainWindow" Height="450" Width="800" x:Name="wind">
+        Title="MainWindow" Height="600" x:Name="wind" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Normal" ShowInTaskbar="True" Topmost="False">
     <StackPanel Orientation="Vertical">
         <Menu>
-            <MenuItem Header="Соединится" Click="MenuItem_Click">
+            <MenuItem Header="Соединиться" Click="MenuItem_Click">
                 <MenuItem.Icon>
                     <Image Source="connect.png"/>
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>
-        <ScrollViewer MaxHeight="{Binding Path=Height,ElementName=wind}">
-            <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal">
+        <ScrollViewer MaxHeight="475">
+            <StackPanel Orientation="Vertical" Name="root">
+                <StackPanel Orientation="Horizontal" Style="{StaticResource HeaderStack}">
                     <Image Source="mssql.png" Stretch="Fill" Height="90" Width="90"/>
-                    <TextBlock Text="SQLAccess"/>
+                    <TextBlock Text="SQLAccess" Style="{StaticResource HeaderText}"/>
                 </StackPanel>
                 <TabControl TabStripPlacement="Top">
-                    <TabItem>
+                    <TabItem Style="{StaticResource TabBorder}">
                         <TabItem.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="read.png" Stretch="Fill" Height="45" Width="45"/>
-                                    <TextBlock Text="QUERY"/>
+                                    <TextBlock Text="ЗАПРОС"/>
                                 </StackPanel>
                             </DataTemplate>
                         </TabItem.HeaderTemplate>
                         <StackPanel Orientation="Vertical">
                             <Label Target="{Binding ElementName=query}">
                                 <StackPanel Orientation="Vertical">
-                                    <AccessText Text="_SELECT COMMAND:"/>
+                                    <AccessText Text="_SELECT КОМАНДА:"/>
                                 </StackPanel>
                             </Label>
-                            <TextBox Name="query" Text="{Binding SelectModel.Query,Mode=TwoWay}"/>
+                            <TextBox Name="query" Text="{Binding SelectModel.Query,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <Border CornerRadius="10">
-                                <Button Content="QUERY" Command="{Binding SelectModel.QueryCommand}"/>
+                                <Button Content="ЗАПРОСИТЬ" Command="{Binding SelectModel.QueryCommand}"/>
                             </Border>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Path=.,Source={x:Static local:MainWindow.CurrentQueryTable}}"/>
+                            <StackPanel Orientation="Horizontal" Style="{StaticResource HeaderStack}">
+                                <TextBlock x:Name="tableName" Text="{Binding Path=.,Source={x:Static local:MainWindow.CurrentQueryTable},UpdateSourceTrigger=Explicit}"/>
                                 <Border CornerRadius="90" Width="40" Height="40" BorderThickness="0">
                                     <Button Command="{Binding SelectModel.PushCommand}">
                                         <Image Source="save.png" Stretch="Fill"/>
                                     </Button>
                                 </Border>
                             </StackPanel>
-                            <DataGrid x:Name="output" ItemsSource="{Binding SelectModel.Results}" SelectedItem="{Binding SelectModel.SelectedRow,Mode=OneWayToSource}" AutoGenerateColumns="False" CellEditEnding="DataGrid_CellEditEnding">
+                            <DataGrid x:Name="output" CanUserSortColumns="False" Width="{Binding Path=Width,ElementName=wind,Mode=OneWay}" ItemsSource="{Binding Path=SelectModel.Results,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectModel.SelectedRow,Mode=OneWayToSource}" AutoGenerateColumns="False" CellEditEnding="DataGrid_CellEditEnding">
 
                             </DataGrid>
                         </StackPanel>
                     </TabItem>
-                    <TabItem>
+                    <TabItem Style="{StaticResource TabBorder}">
                         <TabItem.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="post.png" Stretch="Fill" Height="45" Width="45"/>
-                                    <TextBlock Text="EXECUTE"/>
+                                    <TextBlock Text="ВСТАВКА"/>
                                 </StackPanel>
                             </DataTemplate>
                         </TabItem.HeaderTemplate>
                         <StackPanel Orientation="Vertical">
                             <Label Target="{Binding ElementName=execute}">
                                 <StackPanel Orientation="Vertical">
-                                    <AccessText Text="_INSERT COMMAND:"/>
+                                    <AccessText Text="_INSERT КОМАНДА:"/>
                                 </StackPanel>
                             </Label>
-                            <TextBox Name="execute" Text="{Binding PostModel.Query,Mode=TwoWay}"/>
+                            <TextBox Name="execute" Text="{Binding PostModel.Query,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <Border CornerRadius="10">
-                                <Button Command="{Binding PostModel.ExecuteCommand}" Content="EXECUTE"/>
+                                <Button Command="{Binding PostModel.ExecuteCommand}" Content="ВЫПОЛНИТЬ"/>
                             </Border>
                             <WrapPanel>
                                 <TextBlock x:Name="added" Text="{Binding Path=PostModel.AddedItems,Mode=TwoWay,StringFormat='Строк затронуто: {0}    ',UpdateSourceTrigger=PropertyChanged}"/>

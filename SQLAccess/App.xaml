@@ -1,11 +1,46 @@
 ﻿<Application x:Class="SQLAccess.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters="clr-namespace:SQLAccess.Converters"
-             StartupUri="MainWindow.xaml">
+             xmlns:converters="clr-namespace:SQLAccess.Converters" 
+             StartupUri="MainWindow.xaml" DispatcherUnhandledException="Application_DispatcherUnhandledException">
     <Application.Resources>
         <ResourceDictionary>
             <converters:FormatConverter x:Key="formatConv"/>
+            <Style TargetType="StackPanel">
+                <Setter Property="Background" Value="#606080"/>
+            </Style>
+            <Style TargetType="TabItem">
+                <Setter Property="Height" Value="70"/>
+                <Setter Property="Width" Value="110"/>
+            </Style>
+            <Style TargetType="TextBlock" x:Key="HeaderText">
+                <Setter Property="FontSize" Value="60"/>
+            </Style>
+            <Style TargetType="StackPanel" x:Key="HeaderStack">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="TabItem" x:Key="TabBorder">
+                <Setter Property="Background" Value="#606080"/>
+            </Style>
+            <Style TargetType="Menu">
+                <Setter Property="Background" Value="#906500"/>
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="30"/>
+            </Style>
+            <Style TargetType="AccessText">
+                <Setter Property="FontSize" Value="30"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="FontSize" Value="30"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Background" Value="#F08500"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="#404067"/>
+                <Setter Property="Foreground" Value="#2FF"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

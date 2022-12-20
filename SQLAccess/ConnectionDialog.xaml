@@ -5,33 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SQLAccess"
         mc:Ignorable="d"
-        Title="ConnectionDialog" Height="450" Width="800">
+        Title="ConnectionDialog" Height="450" Width="800" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" WindowState="Normal" ShowInTaskbar="False" Topmost="True">
     <StackPanel Orientation="Vertical">
-        <TextBlock Text="Аутентификация MSSQL:"/>
+        <TextBlock Text="Аутентификация MSSQL:" Background="CornflowerBlue"/>
         <Label Target="{Binding ElementName=server}">
             <StackPanel>
                 <AccessText Text="_СЕРВЕР"/>
             </StackPanel>
         </Label>
-        <TextBox Name="server" Text="{Binding Server,Mode=OneWayToSource}"></TextBox>
+        <TextBox Name="server" Text="{Binding Server,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <Label Target="{Binding ElementName=database}">
             <StackPanel>
                 <AccessText Text="_БАЗА ДАННЫХ"/>
             </StackPanel>
         </Label>
-        <TextBox Name="database" Text="{Binding Database,Mode=OneWayToSource}"></TextBox>
+        <TextBox Name="database" Text="{Binding Database,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <Label Target="{Binding ElementName=login}">
             <StackPanel>
                 <AccessText Text="_ЛОГИН"/>
             </StackPanel>
         </Label>
-        <TextBox Name="login" Text="{Binding Login,Mode=OneWayToSource}"></TextBox>
+        <TextBox Name="login" Text="{Binding Login,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"></TextBox>
         <Label Target="{Binding ElementName=password}">
             <StackPanel>
                 <AccessText Text="_ПАРОЛЬ"/>
             </StackPanel>
         </Label>
-        <TextBox Name="password" Text="{Binding Password,Mode=OneWayToSource}"></TextBox>
-        <Button Command="{Binding ConnectCommand}" Content="ПОДКЛЮЧИТСЯ"/>
+        <TextBox Name="password" Text="{Binding Password,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <Button Command="{Binding ConnectCommand}" Content="ПОДКЛЮЧИТЬСЯ"/>
     </StackPanel>
 </Window>

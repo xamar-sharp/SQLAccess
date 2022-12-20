@@ -31,18 +31,18 @@ namespace SQLAccess
         {
             InitializeComponent();
             _resolver = new ValueResolver();
-            SelectModel = new SelectViewModel(output, new ValueFormatter(), new SpeechLogger(), new DataGridColumnMapper());
+            SelectModel = new SelectViewModel(output, tableName, new ValueFormatter(), new SpeechLogger(), new DataGridColumnMapper());
             PostModel = new PostViewModel(new SpeechLogger());
-            output.AddContextAction("Удалить строку", "drop.png", SelectModel.DropCommand, async () =>
-            {
-                var index = output.SelectedIndex;
-                return await Task.Run(() =>
-                {
-                    var obj = SelectModel.Results[index];
-                    var dict = (IDictionary<string, object>)obj;
-                    return dict[MainWindow.CurrentPrimaryColumn];
-                });
-            });
+            output.AddContextAction("Удалить строку", "drop.png", SelectModel.DropRegisterCommand, async () =>
+             {
+                 var index = output.SelectedIndex;
+                 return await Task.Run(() =>
+                 {
+                     var obj = SelectModel.Results[index];
+                     var dict = (IDictionary<string, object>)obj;
+                     return dict[MainWindow.CurrentPrimaryColumn];
+                 });
+             });
             this.DataContext = this;
         }
         private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)

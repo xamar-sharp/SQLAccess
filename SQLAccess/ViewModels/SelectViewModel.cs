@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Input;
 using System.Dynamic;
+using System.Collections.ObjectModel;
 using Microsoft.Data.SqlClient;
 using SQLAccess.Services;
 using ReactiveUI;
@@ -18,7 +19,7 @@ namespace SQLAccess.ViewModels
     public sealed class SelectViewModel : ReactiveObject
     {
         private string _query;
-        private IList _results = new List<dynamic>(2);
+        private ObservableCollection<dynamic> _results = new ObservableCollection<dynamic>(new List<dynamic>(2));
         private List<string> _updateQueries = new List<string>(4);
         private string _sumUpdateQuery { get => this._updateQueries.Aggregate((first, sec) => first + ";" + sec); }
         private readonly IValueFormatter _formatter;
@@ -32,7 +33,7 @@ namespace SQLAccess.ViewModels
                 this.RaiseAndSetIfChanged(ref _query, value);
             }
         }
-        public IList Results
+        public ObservableCollection<dynamic> Results
         {
             get => _results;
             set
@@ -43,7 +44,7 @@ namespace SQLAccess.ViewModels
         public object SelectedRow { get; set; }
         public ICommand QueryCommand { get; set; }
         public ICommand PushCommand { get; set; }
-        public ICommand DropCommand { get; set; }
+        public ICommand DropRegisterCommand { get; set; }
         internal SelectViewModel AddUpdateChange(string rowId, string columnName, object value)
         {
             string formatValue = _formatter.FormatSql(value);
@@ -60,35 +61,38 @@ namespace SQLAccess.ViewModels
             int start = query.IndexOf("FROM");
             var sub = query.Substring(start);
             var sec = sub.IndexOf(" ");
-            int realStart =start +sec+1;
+            int realStart = start + sec + 1;
             var end = realStart + query.Substring(realStart).IndexOf(" ");
             return query[realStart..end];
         }
-        public SelectViewModel(DataGrid target, IValueFormatter formatter, ISpeechLogger logger, IDataGridColumnMapper mapper)
+        public SelectViewModel(DataGrid target,TextBlock tableName, IValueFormatter formatter, ISpeechLogger logger, IDataGridColumnMapper mapper)
         {
             _formatter = formatter;
             _logger = logger;
             _mapper = mapper;
-            DropCommand = ReactiveCommand.CreateFromTask<Func<Task<Object>>>(async (obj) =>
+            DropRegisterCommand = ReactiveCommand.CreateFromTask<Func<Task<Object>>>(async (obj) =>
             {
                 var id = await obj();
                 try
                 {
                     Results.Remove(SelectedRow);
                     AddDropChange(id.ToString());
-                    _logger.SpeakAsync("Одна строка была удалена!", false, true);
                 }
                 catch (Exception ex)
                 {
                     App.HandleError("Удаление строки", _logger);
                 }
-            }, this.WhenAny(e => e.Results, (res) => res.Value is not null && res.Value.Count > 0 && SelectedRow is not null));
+            }, this.WhenAny(e => e.Results, e => e.SelectedRow, (res, sel) => true));
             QueryCommand = ReactiveCommand.CreateFromTask(async () =>
             {
                 try
                 {
                     _updateQueries.Clear();
                     Results.Clear();
+                    if(!Query.EndsWith(" "))
+                    {
+                        Query += " ";
+                    }
                     SqlCommand command = new SqlCommand(Query, App.Connection);
                     using var reader = await command.ExecuteReaderAsync();
                     target.Columns?.Clear();
@@ -96,6 +100,7 @@ namespace SQLAccess.ViewModels
                     var coll = reader.GetColumnSchema();
                     var tab = reader.GetSchemaTable();
                     MainWindow.CurrentQueryTable = FindTableName(Query);
+                    tableName.GetBindingExpression(TextBlock.TextProperty).UpdateTarget();
                     MainWindow.CurrentPrimaryColumn = tab.PrimaryKey.FirstOrDefault()?.ColumnName ?? coll.FirstOrDefault(cl => cl.ColumnName.Contains("Id")).ColumnName;
                     while (await reader.ReadAsync())
                     {
@@ -106,7 +111,7 @@ namespace SQLAccess.ViewModels
                             {
                                 target.Columns.Add(_mapper.Map(reader[columnIndex], coll[columnIndex].ColumnName));
                             }
-                            (previous as IDictionary<string,object>).Add(new KeyValuePair<string, object>(coll[columnIndex].ColumnName, reader[columnIndex]));
+                            (previous as IDictionary<string, object>).Add(new KeyValuePair<string, object>(coll[columnIndex].ColumnName, reader[columnIndex]));
                         }
                         read = true;
                         Results.Add(previous);

@@ -48,9 +48,22 @@ namespace SQLAccess.ViewModels
                 try
                 {
                     SqlCommand command = new SqlCommand(Query, App.Connection);
-                    AddedItems = await command.ExecuteNonQueryAsync();
+                    var res = await command.ExecuteNonQueryAsync();
+                    if(res == -1)
+                    {
+                        res = 0;
+                        _logger.SpeakAsync("Неверная команда, используйте команду INSERT!", false, true);
+                    }
+                    else if(res != 0)
+                    {
+                        _logger.SpeakAsync("Элементы успешно вставлены в таблицу!", false, true);
+                    }
+                    else
+                    {
+                        _logger.SpeakAsync("Ни один эдемент не был добавлен в таблицу!!", false, true);
+                    }
+                    AddedItems = res;
                     LastExecuteDate = DateTime.Now;
-                    _logger.SpeakAsync("Отправка данных успешно выполнена!", false, true);
                 }
                 catch (Exception ex)
                 {
