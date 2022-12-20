@@ -32,6 +32,6 @@
             </StackPanel>
         </Label>
         <TextBox Name="password" Text="{Binding Password,Mode=OneWayToSource,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <Button Command="{Binding ConnectCommand}" Content="ПОДКЛЮЧИТЬСЯ"/>
+        <Button x:Name="connectButton" Command="{Binding ConnectCommand}" Content="ПОДКЛЮЧИТЬСЯ"/>
     </StackPanel>
 </Window>

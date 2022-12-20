@@ -38,12 +38,12 @@
                             </Label>
                             <TextBox Name="query" Text="{Binding SelectModel.Query,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <Border CornerRadius="10">
-                                <Button Content="ЗАПРОСИТЬ" Command="{Binding SelectModel.QueryCommand}"/>
+                                <Button x:Name="queryButton" Content="ЗАПРОСИТЬ" Command="{Binding SelectModel.QueryCommand}"/>
                             </Border>
                             <StackPanel Orientation="Horizontal" Style="{StaticResource HeaderStack}">
                                 <TextBlock x:Name="tableName" Text="{Binding Path=.,Source={x:Static local:MainWindow.CurrentQueryTable},UpdateSourceTrigger=Explicit}"/>
                                 <Border CornerRadius="90" Width="40" Height="40" BorderThickness="0">
-                                    <Button Command="{Binding SelectModel.PushCommand}">
+                                    <Button x:Name="pushButton" Command="{Binding SelectModel.PushCommand}">
                                         <Image Source="save.png" Stretch="Fill"/>
                                     </Button>
                                 </Border>
@@ -70,7 +70,7 @@
                             </Label>
                             <TextBox Name="execute" Text="{Binding PostModel.Query,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                             <Border CornerRadius="10">
-                                <Button Command="{Binding PostModel.ExecuteCommand}" Content="ВЫПОЛНИТЬ"/>
+                                <Button x:Name="executeButton"  Command="{Binding PostModel.ExecuteCommand}" Content="ВЫПОЛНИТЬ"/>
                             </Border>
                             <WrapPanel>
                                 <TextBlock x:Name="added" Text="{Binding Path=PostModel.AddedItems,Mode=TwoWay,StringFormat='Строк затронуто: {0}    ',UpdateSourceTrigger=PropertyChanged}"/>

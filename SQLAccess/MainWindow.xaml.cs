@@ -33,6 +33,12 @@ namespace SQLAccess
             _resolver = new ValueResolver();
             SelectModel = new SelectViewModel(output, tableName, new ValueFormatter(), new SpeechLogger(), new DataGridColumnMapper());
             PostModel = new PostViewModel(new SpeechLogger());
+            queryButton.AddToolTip("Выполняет SELECT SQL запрос и возвращает в таблице ниже результаты.\nРезультаты можно редактировать,меняя значения в полях,\nи удалять по правой кнопке мыши");
+            pushButton.AddToolTip("Применяет ваши изменения к реальной таблице SQLServer");
+            executeButton.AddToolTip("Выполняет INSERT SQL запрос и возвращает ниже статус его выполнения и дату");
+            ToolTipService.SetShowOnDisabled(queryButton, true);
+            ToolTipService.SetShowOnDisabled(pushButton, true);
+            ToolTipService.SetShowOnDisabled(executeButton, true);
             output.AddContextAction("Удалить строку", "drop.png", SelectModel.DropRegisterCommand, async () =>
              {
                  var index = output.SelectedIndex;

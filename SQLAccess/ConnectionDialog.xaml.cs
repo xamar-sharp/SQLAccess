@@ -24,6 +24,8 @@ namespace SQLAccess
         public ConnectionDialog()
         {
             InitializeComponent();
+            ToolTipService.SetShowOnDisabled(connectButton, true);
+            connectButton.AddToolTip("Подключение к SQLServer по введенным данным из формы");
             this.DataContext = Model = new ConnectViewModel(new SpeechLogger(), this);
         }
     }
